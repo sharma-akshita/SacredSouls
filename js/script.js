@@ -24,11 +24,19 @@ document
   .getElementById("contact-form")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    alert("Thank you for your message!");
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+
+    if (name && email && phone) {
+      alert("Thank you for your message!");
+      this.reset();
+    } else {
+      alert("Please fill out all required fields.");
+    }
   });
 
-// For smooth behaviour
-
+// For smooth scrolling behavior
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
@@ -38,28 +46,20 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-      if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-      } else {
-          entry.target.classList.remove('show');
-      }
+// Intersection Observer for revealing elements on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    } else {
+      entry.target.classList.remove("show");
+    }
   });
 });
 
-document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+document.querySelectorAll(".hidden").forEach((el) => observer.observe(el));
 
-document.getElementById("contact-form").addEventListener("submit", function (event) {
-  event.preventDefault();
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
-
-  if (name && email && phone) {
-      alert("Thank you for your message!");
-      this.reset();
-  } else {
-      alert("Please fill out all required fields.");
-  }
+// Toggle the navigation menu on small screens
+document.querySelector(".nav-toggle").addEventListener("click", function () {
+  document.querySelector("nav ul").classList.toggle("show-menu");
 });
