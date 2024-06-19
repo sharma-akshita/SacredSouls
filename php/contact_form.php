@@ -12,8 +12,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Connected successfully"; // Add this line for debugging
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $conn->real_escape_string($_POST['address']);
     $subject = $conn->real_escape_string($_POST['subject']);
     $message = $conn->real_escape_string($_POST['message']);
+
+    echo "Received data: Name=$name, Email=$email, Phone=$phone, Address=$address, Subject=$subject, Message=$message";
 
     $sql = "INSERT INTO contact (Name, Email, Phone, Address, Subject, Message) VALUES ('$name', '$email', '$phone', '$address', '$subject', '$message')";
 
@@ -34,4 +34,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-?>
