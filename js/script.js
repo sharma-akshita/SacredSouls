@@ -22,15 +22,27 @@ scrollToTopBtn.addEventListener("click", function (event) {
 // Contact form submission handling
 document
   .getElementById("contact-form")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
 
     if (name && email && phone) {
-      alert("Thank you for your message!");
-      this.reset();
+      try {
+        const formData = new FormData(this);
+        const response = await fetch("php/contact_form.php", {
+          method: "POST",
+          body: formData,
+        });
+        const result = await response.text();
+        console.log(result); // Log the response from the PHP script for debugging
+        alert("Thank you for your message!");
+        this.reset();
+      } catch (error) {
+        console.error("Error submitting the form: ", error);
+        alert("There was an error submitting the form. Please try again.");
+      }
     } else {
       alert("Please fill out all required fields.");
     }
